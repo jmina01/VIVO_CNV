@@ -123,7 +123,7 @@ def get_sql_server_connection():
     connection = pyodbc.connect(
         "DRIVER={ODBC Driver 17 for SQL Server};"
         "SERVER=34.45.59.38,1433;"
-        "DATABASE=master;" 
+        "DATABASE=convivencia;" 
         "UID=SA;"
         "PWD=Belen117"
     )
