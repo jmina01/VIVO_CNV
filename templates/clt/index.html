@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+  <h1>Reporte multiple</h1>
+
+ 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        {% if category == 'error' %}
+          <div style="background-color: red; color: white; padding: 10px; margin-bottom: 10px;">
+            {{ msg }}
+          </div>
+        {% else %}
+          <div style="background-color: green; color: white; padding: 10px; margin-bottom: 10px;">
+            {{ msg }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes Table</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+      .container {
+        max-width: 1500px;
+        margin: auto;
+        background: white;
+        padding: 50px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th, td {
+        padding: 20px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      table, th, td {
+        border: none;
+      }
+      input[type="text"] {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+        width: 100%;
+      }
+      .action-btn {
+        border: none;
+        border-radius: 6px;
+        margin-right: 3px;
+        font-size: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 3px 8px;
+        cursor: pointer;
+      }
+      .pdf-excel-btn.disabled {
+        background-color: #ccc;  
+        color: black;            
+        cursor: not-allowed;
+      }
+      .pdf-excel-btn.enabled {
+        background-color: #2F54EB; 
+        color: white;
+        cursor: pointer;
+      }
+      .search-btn {
+        background-color: black;
+        color: white;
+      }
+      .actions-cell {
+        text-align: right;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>idCliente</th>
+            <th>nombreCliente</th>
+            <th>Desarrollo</th>
+            <th>Financiamiento</th>
+            <th>idEK</th>
+            <th>Ubicacion</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{ row.idCliente }}</td>
+            <td>
+              <input type="text" name="cliente" form="form{{ loop.index }}" value="{{ row.nombreCliente }}">
+            </td>
+            <td>{{ row.Desarrollo }}</td>
+            <td>{{ row.Financiamiento }}</td>
+            <td>{{ row.idEK }}</td>
+            <td>{{ row.Ubicacion }}</td>
+            <td class="actions-cell">
+              {% if row.idCliente %}
+              <button class="action-btn pdf-excel-btn enabled" 
+                      type="button" 
+                      onclick="window.location.href='{{ url_for('generar_pdf', nombre_cliente=row.nombreCliente) }}'">
+                PDF
+              </button>
+              <button class="action-btn pdf-excel-btn enabled" type="button">EXCEL</button>
+            {% else %}
+              <button class="action-btn pdf-excel-btn disabled" type="button" disabled>PDF</button>
+              <button class="action-btn pdf-excel-btn disabled" type="button" disabled>EXCEL</button>
+            {% endif %}
+            
+                <button class="action-btn search-btn" type="submit" form="form{{ loop.index }}">BUSCAR</button>
+                <form id="form{{ loop.index }}" method="GET" action="{{ url_for('index') }}" style="display:none;">
+                  <input type="hidden" name="row" value="{{ loop.index }}">
+                </form>
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+  </html>
+{% endblock %}
