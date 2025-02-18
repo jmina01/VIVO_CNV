@@ -1,14 +1,18 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Página con Sidebar{% endblock %}</title>
-  <!-- Ruta css-->
+  <title>{% block title %}Mi Aplicación{% endblock %}</title>
+  <!-- Tailwind CSS vía CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Preline vía CDN -->
+  <script src="https://unpkg.com/preline@latest/dist/preline.js"></script>
+  <!-- Tu CSS personalizado -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
 </head>
 <body>
-  <!-- Boton barra lateral -->
+  <!-- Botón de barra lateral -->
   <div class="menu">
     <ion-icon name="menu-outline"></ion-icon>
     <ion-icon name="close-outline"></ion-icon>
@@ -21,52 +25,53 @@
         <ion-icon id="cloud" name="cloud-outline"></ion-icon>
         <span>Convivencias</span>
       </div>
-      <button class="boton">
+      <!-- Enlace a addRE.html -->
+      <a href="addRE.html" class="boton">
         <ion-icon name="add-outline"></ion-icon>
         <span>Crear reporte</span>
-      </button>
+      </a>
     </div>
 
     <nav class="navegacion">
       <ul>
         <li>
-          <a id="inbox" href="#">
+          <a id="inbox" href="/">
             <ion-icon name="mail-unread-outline"></ion-icon>
             <span>Reporte</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="addCR.html">
             <ion-icon name="star-outline"></ion-icon>
             <span>Pagos</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="addCE.html">
             <ion-icon name="paper-plane-outline"></ion-icon>
             <span>Cobranza</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="addAT.html">
             <ion-icon name="document-text-outline"></ion-icon>
             <span>Anticipos</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="addCL.html">
             <ion-icon name="bookmark-outline"></ion-icon>
             <span>Clientes</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="editMov.html">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <span>Correcciones</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="addCL.html">
             <ion-icon name="trash-outline"></ion-icon>
             <span>Ayuda</span>
           </a>
@@ -89,19 +94,21 @@
       </div>
     
       <div class="usuario">
-        <img src="{{ url_for('static', filename='img/img-user.jpg') }}" alt="...">
+        <img src="{{ url_for('static', filename='img/img-user.jpg') }}" alt="Usuario">
         <div class="info-usuario">
           <div class="nombre-email">
             <span class="nombre">jmina</span>
             <span class="email">jmina@vivo.mx</span>
           </div>
-          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          <a href="addCL.html">
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- contenido de cada vista -->
+  <!-- Contenido específico de cada vista -->
   <main>
     {% block content %}{% endblock %}
   </main>
@@ -109,7 +116,6 @@
   <!-- Carga de Ionicons -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <!-- Ruta al archivo js -->
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
